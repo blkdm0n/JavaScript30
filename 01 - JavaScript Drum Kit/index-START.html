@@ -59,6 +59,29 @@
 
 <script>
 
+  //plays the audio file on keydown, resets the audios time to multiple plays, adds class of playing to alter style
+
+  function playSound (e) {
+    const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+    const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+    if(!audio) return; //stops the function from running
+    audio.currentTime = 0; //lets the play over and over
+    audio.play();
+    key.classList.add('playing');
+  }
+
+  //removes the transition so the played notes 'playing' class is removed
+
+  function removeTransition (e) {
+      if (e.propertyName !== 'transform') return;
+      this.classList.remove('playing');
+    };
+
+
+  //selects all the cools and uses for each to add a listener for each and remove the transition/styling of playing key 
+  const keys = document.querySelectorAll('.key');
+  keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+  window.addEventListener('keydown', playSound);
 </script>
 
 
