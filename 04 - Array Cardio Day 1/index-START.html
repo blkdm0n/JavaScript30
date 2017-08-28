@@ -32,27 +32,158 @@
     // Array.prototype.filter()
     // 1. Filter the list of inventors for those who were born in the 1500's
 
+    //Input:  An array of objects
+    //Output:  An array of people born in the 1500s
+    //Constraints:  None
+    //Edge Cases:  None
+
+    var filtedBy1500s = inventors.filter(function(inventor) {
+      if(inventor.year >= 1500 && inventor.year <= 1599) {
+        return inventor;
+      }
+    });
+
+    console.log(filtedBy1500s);
+
+  
     // Array.prototype.map()
     // 2. Give us an array of the inventors' first and last names
+
+
+    //input: an array of inventors
+    //outputs: an array of their first and lastnames
+    //constraints: must use map method   
+    //edge cases: none 
+
+    //map creates a new array
+
+    const arrayOfNames = inventors.map(function(inventor) {
+      return inventor.first + ' ' + inventor.last;
+    });
+
+    console.log(arrayOfNames);
 
     // Array.prototype.sort()
     // 3. Sort the inventors by birthdate, oldest to youngest
 
+    //Input: An array of inventors
+    //Output: Sorted array by date of birth
+    //Constraints:  Must use native sort()
+    //Edge Cases:  None
+
+    const oldestToYoungest = inventors.sort(function(a,b) {
+    return a.year - b.year;
+    });
+
     // Array.prototype.reduce()
     // 4. How many years did all the inventors live?
 
+    //Input: An array of objects
+    //Output: total years of life for all inventors
+    //Constraints: must use the reduce method
+    //Edge Cases: None
+
+    //start with acc = 0;
+    //years lived var inventor passed - inventor born
+    //add years lived to accumulator
+    //return total;
+
+    //reduce function with total, inventor as parameters
+    //total + lifespan of the inventor (passed - year)
+    //remember to set total's initial value to 0 or you'll get an error
+
+    var totalLifespan = inventors.reduce((total, inventor)=> {
+      return total + (inventor.passed - inventor.year);
+    }, 0);
+
+
+
+    console.log(totalLifespan);
+
     // 5. Sort the inventors by years lived
+
+    //Sort inventors by years lived.
+
+    //Inputs:  array of inventors 
+    //Outputs:  reordered array sorted by number of years lived
+    //Constraints:  use sort()
+    //Edge:  None  
+
+    //take the first inventor, check his lifespan
+      //check the next inventor if their lifespan is > move them to the firsts position
+      
+    var sortByLifespan = inventors.sort((a,b) => {
+      //last guys age
+      const lastGuy = a.passed - a.year;
+      //next guys age 
+      const nextGuy = b.passed - b.year;
+      return lastGuy > nextGuy ? -1 : 1;
+    });
+
+    console.log(sortByLifespan);
+
+
+
 
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
+
+    //get dom elements from wikipedia and find the element containing the data
+    const category = document.querySelector('.mw-category');
+
+    //find the links in category containing <a> tags
+    const links = Array.from(category.querySelector('a'));
+
+    //map over the links array to look at each links textContent and convert to array
+    //chain you methods to filter then for street Names containing 'de'.
+    const de = links
+              .map(link => link.textContent)
+              .filter(streetName => streetName.includes('de'));
+    
+    console.log(de);
 
 
     // 7. sort Exercise
     // Sort the people alphabetically by last name
 
+    //Input: an array of people
+    //Output: sort the array of people by their last Names
+    //Constraints:  use sort method
+    //Edge Cases: none  
+
+    const alpha = people.sort((lastOne, nextOne) => {
+    //splits 1st and last names using destructuring from ES6 as well as split();
+    const [aLast, aFirst] = lastOne.split(', ');
+    const [bLast, bFirst] = nextOne.split(', ');
+    //if aLast is less than bLast move it down, else move it up
+    return aLast < bLast ? -1 : 1;
+    });
+
+    console.log(alpha);
+
+
     // 8. Reduce Exercise
     // Sum up the instances of each of these
     const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
+
+    //Input:  An array called data 
+    //Output:  The sum of the instances of each of these (in an object);
+    //Constraints:  use reduce() method
+    //Edge Case:  none  
+
+    //use reduce passing in a function which takes an empty object, and item as parameters
+
+    data.reduce((obj, item) => {
+
+    //if the object doesn't exist -> add it
+    //once we add it, then increment it
+    //return the object
+      if (!obj[item]) {
+        obj[item] = 0;
+      } 
+      obj[item]++;
+      return obj;
+    },{});
 
   </script>
 </body>
